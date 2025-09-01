@@ -263,7 +263,9 @@ extension MCEmojiPickerViewController: MCEmojiPickerViewDelegate {
     func clearSearch() {
         viewModel.clearSearch()
     }
-    
+
+
+    @available(iOS 13.0, *)
     private func applyTheme() {
         overrideUserInterfaceStyle = theme.userInterfaceStyle
     }
