@@ -69,6 +69,13 @@ public struct MCEmojiPickerRepresentableController: UIViewControllerRepresentabl
     /// The default value of this property is `.light`.
     public var feedBackGeneratorStyle: UIImpactFeedbackGenerator.FeedbackStyle?
     
+    /// Theme override for the emoji picker appearance.
+    ///
+    /// The default value of this property is `.automatic` which follows the system appearance.
+    /// Set to `.light` or `.dark` to force a specific appearance.
+    @available(iOS 13.0, *)
+    public var theme: MCEmojiPickerTheme?
+    
     // MARK: - Initializers
     
     public init(
@@ -79,7 +86,8 @@ public struct MCEmojiPickerRepresentableController: UIViewControllerRepresentabl
         horizontalInset: CGFloat? = nil,
         isDismissAfterChoosing: Bool? = nil,
         selectedEmojiCategoryTintColor: UIColor? = nil,
-        feedBackGeneratorStyle: UIImpactFeedbackGenerator.FeedbackStyle? = nil
+        feedBackGeneratorStyle: UIImpactFeedbackGenerator.FeedbackStyle? = nil,
+        theme: MCEmojiPickerTheme? = nil
     ) {
         self._isPresented = isPresented
         self._selectedEmoji = selectedEmoji
@@ -89,6 +97,9 @@ public struct MCEmojiPickerRepresentableController: UIViewControllerRepresentabl
         self.isDismissAfterChoosing = isDismissAfterChoosing
         self.selectedEmojiCategoryTintColor = selectedEmojiCategoryTintColor
         self.feedBackGeneratorStyle = feedBackGeneratorStyle
+        if #available(iOS 13.0, *) {
+            self.theme = theme
+        }
     }
     
     // MARK: - Public Methods
@@ -120,6 +131,7 @@ public struct MCEmojiPickerRepresentableController: UIViewControllerRepresentabl
                 emojiPicker.selectedEmojiCategoryTintColor = selectedEmojiCategoryTintColor
             }
             if let feedBackGeneratorStyle { emojiPicker.feedBackGeneratorStyle = feedBackGeneratorStyle }
+            if #available(iOS 13.0, *), let theme { emojiPicker.theme = theme }
             context.coordinator.addPickerDismissingObserver()
             representableController.present(emojiPicker, animated: true)
         case false:

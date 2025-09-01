@@ -73,6 +73,17 @@ public final class MCEmojiPickerViewController: UIViewController {
         }
     }
     
+    /// Theme override for the emoji picker appearance.
+    ///
+    /// The default value of this property is `.automatic` which follows the system appearance.
+    /// Set to `.light` or `.dark` to force a specific appearance.
+    @available(iOS 13.0, *)
+    public var theme: MCEmojiPickerTheme = .automatic {
+        didSet {
+            applyTheme()
+        }
+    }
+    
     /// Feedback generator style. To turn off, set `nil` to this parameter.
     ///
     /// The default value of this property is `.light`.
@@ -118,6 +129,9 @@ public final class MCEmojiPickerViewController: UIViewController {
         super.viewDidLoad()
         setupPreferredContentSize()
         setupArrowDirections()
+        if #available(iOS 13.0, *) {
+            applyTheme()
+        }
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -249,6 +263,11 @@ extension MCEmojiPickerViewController: MCEmojiPickerViewDelegate {
     
     func clearSearch() {
         viewModel.clearSearch()
+    }
+    
+    @available(iOS 13.0, *)
+    private func applyTheme() {
+        overrideUserInterfaceStyle = theme.userInterfaceStyle
     }
 }
 

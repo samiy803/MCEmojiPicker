@@ -158,6 +158,15 @@ Feedback generator style. To turn off, set `nil` to this parameter. The default 
 viewController.feedBackGeneratorStyle = .soft
 ```
 
+### Theme override
+Theme override for the emoji picker appearance. The default value of this property is `.automatic` which follows the system appearance. Set to `.light` or `.dark` to force a specific appearance.
+
+```swift
+viewController.theme = .dark  // Force dark mode
+viewController.theme = .light // Force light mode
+viewController.theme = .automatic // Follow system appearance (default)
+```
+
 ## SwiftUI
 
 Use like system popover. All settings are available in the method initializer.
@@ -182,7 +191,8 @@ MCEmojiPickerRepresentableController(
     horizontalInset: .zero,
     isDismissAfterChoosing: true,
     selectedEmojiCategoryTintColor: .systemBlue,
-    feedBackGeneratorStyle: .light
+    feedBackGeneratorStyle: .light,
+    theme: .dark // Force dark mode
 )
 ```
 

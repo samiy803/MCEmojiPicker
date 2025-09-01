@@ -27,6 +27,9 @@ class ViewController: UIViewController {
     
     // MARK: - Private Properties
     
+    @available(iOS 13.0, *)
+    private var currentTheme: MCEmojiPickerTheme = .automatic
+    
     private lazy var emojiButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -49,12 +52,35 @@ class ViewController: UIViewController {
         return button
     }()
     
+    @available(iOS 13.0, *)
+    private lazy var themeSegmentedControl: UISegmentedControl = {
+        let items = ["Auto", "Light", "Dark"]
+        let control = UISegmentedControl(items: items)
+        control.translatesAutoresizingMaskIntoConstraints = false
+        control.selectedSegmentIndex = 0
+        control.addTarget(self, action: #selector(themeChanged(_:)), for: .valueChanged)
+        return control
+    }()
+    
+    @available(iOS 13.0, *)
+    private lazy var themeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Theme:"
+        label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        label.textAlignment = .center
+        return label
+    }()
+    
     // MARK: - Initializers
     
     init() {
         super.init(nibName: nil, bundle: nil)
         setupBackgroundColor()
         setupEmojiButtonLayout()
+        if #available(iOS 13.0, *) {
+            setupThemeControls()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -74,7 +100,24 @@ class ViewController: UIViewController {
         let viewController = MCEmojiPickerViewController()
         viewController.delegate = self
         viewController.sourceView = sender
+        if #available(iOS 13.0, *) {
+            viewController.theme = currentTheme
+        }
         present(viewController, animated: true)
+    }
+    
+    @available(iOS 13.0, *)
+    @objc private func themeChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            currentTheme = .automatic
+        case 1:
+            currentTheme = .light
+        case 2:
+            currentTheme = .dark
+        default:
+            currentTheme = .automatic
+        }
     }
     
     @objc private func didPanEmojiButton(
@@ -114,6 +157,22 @@ class ViewController: UIViewController {
             emojiButton.heightAnchor.constraint(equalToConstant: 88),
             emojiButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emojiButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -200)
+        ])
+    }
+    
+    @available(iOS 13.0, *)
+    private func setupThemeControls() {
+        view.addSubview(themeLabel)
+        view.addSubview(themeSegmentedControl)
+        
+        NSLayoutConstraint.activate([
+            themeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            themeLabel.topAnchor.constraint(equalTo: emojiButton.bottomAnchor, constant: 80),
+            
+            themeSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            themeSegmentedControl.topAnchor.constraint(equalTo: themeLabel.bottomAnchor, constant: 16),
+            themeSegmentedControl.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
+            themeSegmentedControl.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20)
         ])
     }
 }
