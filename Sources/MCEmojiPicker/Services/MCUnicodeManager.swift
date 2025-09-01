@@ -43,45 +43,16 @@ extension MCEmojiCategoryType {
 /// The class is responsible for getting a relevant set of emojis for iOS version.
 final class MCUnicodeManager: MCUnicodeManagerProtocol {
     
-    /// The maximum number of frequently used emojis to include in the `frequentlyUsed` category.
-    public let maxFrequentlyUsedEmojisCount: Int
-    
     // MARK: - Initializers
     
-    public init(maxFrequentlyUsedEmojis: Int = 30) {
-        self.maxFrequentlyUsedEmojisCount = maxFrequentlyUsedEmojis
+    public init() {
     }
     
     // MARK: - Public Methods
     
     /// Returns all emojis available for the current device's iOS version.
     func getEmojisForCurrentIOSVersion() -> [MCEmojiCategory] {
-        let frequentlyUsedEmojis: MCEmojiCategory = .init(
-            type: .frequentlyUsed,
-            emojis: getFrequentlyUsedEmojis()
-        )
-        return [frequentlyUsedEmojis] + Self.defaultEmojis
-    }
-    
-    // MARK: - Private Methods
-
-    /// Returns the top n (`maxFrequentlyUsedEmojis`) emojis by usage, for emojis with a `usageCount` > 0.
-    private func getFrequentlyUsedEmojis() -> [MCEmoji] {
-        Array(
-            Self.defaultEmojis
-                .lazy
-                .flatMap({ $0.emojis })
-                .filter({ $0.usageCount > 0 })
-                .sorted(by: { lhs, rhs in
-                    let (aUsage, bUsage) = (lhs.usage, rhs.usage)
-                    guard aUsage.count != bUsage.count else {
-                        // Break ties with most recent usage
-                        return lhs.lastUsage > rhs.lastUsage
-                    }
-                    return aUsage.count > bUsage.count
-                })
-                .prefix(maxFrequentlyUsedEmojisCount)
-        )
+        return Self.defaultEmojis
     }
 
     // MARK: - Private Properties

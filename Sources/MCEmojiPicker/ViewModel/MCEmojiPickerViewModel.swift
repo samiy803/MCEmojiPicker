@@ -80,10 +80,6 @@ final class MCEmojiPickerViewModel: MCEmojiPickerViewModelProtocol {
     
     init(unicodeManager: MCUnicodeManagerProtocol = MCUnicodeManager()) {
         allEmojiCategories = unicodeManager.getEmojisForCurrentIOSVersion()
-        // Increment usage of each emoji upon selection
-        selectedEmoji.bind { emoji in
-            emoji?.incrementUsageCount()
-        }
     }
     
     // MARK: - Public Methods

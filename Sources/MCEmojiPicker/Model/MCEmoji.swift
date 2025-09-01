@@ -30,14 +30,11 @@ public struct MCEmoji: Codable {
     /// Keys for storage in UserDefaults.
     private enum StorageKeys {
         case skinTone(_ emoji: MCEmoji)
-        case usageTimestamps(_ emoji: MCEmoji)
 
         var key: String {
             switch self {
             case .skinTone(let emoji):
                 return emoji.emojiKeys.emoji()
-            case .usageTimestamps(let emoji):
-                return StorageKeys.skinTone(emoji).key + "-usage-timestamps"
             }
         }
     }
@@ -52,18 +49,6 @@ public struct MCEmoji: Codable {
     public var skinTone: MCEmojiSkinTone? {
         let skinToneRawValue = UserDefaults.standard.integer(forKey: StorageKeys.skinTone(self).key)
         return MCEmojiSkinTone(rawValue: skinToneRawValue)
-    }
-    /// All times when the emoji has been selected.
-    public var usage: [TimeInterval] {
-        (UserDefaults.standard.array(forKey: StorageKeys.usageTimestamps(self).key) as? [TimeInterval]) ?? []
-    }
-    /// The number of times this emoji has been selected.
-    public var usageCount: Int {
-        usage.count
-    }
-    /// The last time when this emoji has been selected.
-    public var lastUsage: TimeInterval {
-        usage.first ?? .zero
     }
     /// The string representation of the emoji.
     public var string: String {
@@ -108,12 +93,6 @@ public struct MCEmoji: Codable {
     ///   - skinToneRawValue: The raw value of the `MCEmojiSkinTone`.
     public func set(skinToneRawValue: Int) {
         UserDefaults.standard.set(skinToneRawValue, forKey: StorageKeys.skinTone(self).key)
-    }
-    
-    /// Increments the usage count for this emoji.
-    public func incrementUsageCount() {
-        let nowTimestamp = Date().timeIntervalSince1970
-        UserDefaults.standard.set([nowTimestamp] + usage, forKey: StorageKeys.usageTimestamps(self).key)
     }
     
     // MARK: - Private Methods

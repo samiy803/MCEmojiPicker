@@ -41,7 +41,6 @@ public struct MCEmojiCategory: Codable {
 /// This enumeration shows a list of categories that are contained in the main collection.
 @_spi(JSON)
 public enum MCEmojiCategoryType: Int, CaseIterable, Codable {
-    case frequentlyUsed
     case people
     case nature
     case foodAndDrink
@@ -54,8 +53,6 @@ public enum MCEmojiCategoryType: Int, CaseIterable, Codable {
     /// A constant key for accessing name localization resources for each category.
     public var localizeKey: String {
         switch self {
-        case .frequentlyUsed:
-            return "frequentlyUsed"
         case .people:
             return "emotionsAndPeople"
         case .nature:
