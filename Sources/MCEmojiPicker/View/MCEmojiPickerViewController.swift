@@ -79,7 +79,9 @@ public final class MCEmojiPickerViewController: UIViewController {
     /// Set to `.light` or `.dark` to force a specific appearance.
     public var theme: MCEmojiPickerTheme = .automatic {
         didSet {
-            applyTheme()
+            if #available(iOS 13.0, *) {
+                applyTheme()
+            }
         }
     }
     
