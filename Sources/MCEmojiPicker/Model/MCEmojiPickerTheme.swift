@@ -1,7 +1,6 @@
 import UIKit
 
 /// Theme options for MCEmojiPicker.
-@available(iOS 13.0, *)
 public enum MCEmojiPickerTheme {
     /// Automatically adjusts to the system's current appearance (light or dark mode).
     case automatic

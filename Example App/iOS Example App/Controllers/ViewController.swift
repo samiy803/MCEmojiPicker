@@ -27,7 +27,6 @@ class ViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    @available(iOS 13.0, *)
     private var currentTheme: MCEmojiPickerTheme = .automatic
     
     private lazy var emojiButton: UIButton = {
@@ -52,7 +51,6 @@ class ViewController: UIViewController {
         return button
     }()
     
-    @available(iOS 13.0, *)
     private lazy var themeSegmentedControl: UISegmentedControl = {
         let items = ["Auto", "Light", "Dark"]
         let control = UISegmentedControl(items: items)
@@ -62,7 +60,6 @@ class ViewController: UIViewController {
         return control
     }()
     
-    @available(iOS 13.0, *)
     private lazy var themeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -106,7 +103,6 @@ class ViewController: UIViewController {
         present(viewController, animated: true)
     }
     
-    @available(iOS 13.0, *)
     @objc private func themeChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -160,7 +156,6 @@ class ViewController: UIViewController {
         ])
     }
     
-    @available(iOS 13.0, *)
     private func setupThemeControls() {
         view.addSubview(themeLabel)
         view.addSubview(themeSegmentedControl)

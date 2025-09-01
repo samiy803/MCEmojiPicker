@@ -1,7 +1,6 @@
 import XCTest
 @testable import MCEmojiPicker
 
-@available(iOS 13.0, *)
 class MCEmojiPickerThemeTests: XCTestCase {
     
     func testThemeUserInterfaceStyleMapping() {

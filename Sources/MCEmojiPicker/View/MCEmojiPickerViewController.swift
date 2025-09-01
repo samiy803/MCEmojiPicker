@@ -77,7 +77,6 @@ public final class MCEmojiPickerViewController: UIViewController {
     ///
     /// The default value of this property is `.automatic` which follows the system appearance.
     /// Set to `.light` or `.dark` to force a specific appearance.
-    @available(iOS 13.0, *)
     public var theme: MCEmojiPickerTheme = .automatic {
         didSet {
             applyTheme()
@@ -265,7 +264,6 @@ extension MCEmojiPickerViewController: MCEmojiPickerViewDelegate {
         viewModel.clearSearch()
     }
     
-    @available(iOS 13.0, *)
     private func applyTheme() {
         overrideUserInterfaceStyle = theme.userInterfaceStyle
     }

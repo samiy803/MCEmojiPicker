@@ -73,7 +73,6 @@ public struct MCEmojiPickerRepresentableController: UIViewControllerRepresentabl
     ///
     /// The default value of this property is `.automatic` which follows the system appearance.
     /// Set to `.light` or `.dark` to force a specific appearance.
-    @available(iOS 13.0, *)
     public var theme: MCEmojiPickerTheme?
     
     // MARK: - Initializers
